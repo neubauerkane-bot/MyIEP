@@ -1,0 +1,819 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IEP | Immersion Education Partners</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Manrope:wght@400;600;700;800&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+    <style>
+        /* ======================= RESET & CORE ======================= */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            /* Modern Dark Theme Palette */
+            --bg-dark: #0a0a0a;
+            --bg-card: #141414;
+            --bg-surface: #1c1c1c;
+            
+            /* Typography Colors */
+            --text-main: #e5e5e5;
+            --text-muted: #a3a3a3;
+            --text-dark: #0a0a0a;
+
+            /* Gold Accents */
+            --gold-primary: #D4AF37;
+            --gold-light: #F3E5AB;
+            --gold-dim: #8a7020;
+            --gold-gradient: linear-gradient(135deg, #D4AF37 0%, #AA8A28 100%);
+
+            /* Functional */
+            --border-subtle: rgba(255, 255, 255, 0.08);
+            --glass-bg: rgba(20, 20, 20, 0.85);
+            --blur-val: 12px;
+
+            /* Typography */
+            --font-sans: 'Manrope', sans-serif;
+            --font-body: 'Inter', sans-serif;
+            --font-serif: 'Playfair Display', serif;
+
+            /* Animation */
+            --ease-lux: cubic-bezier(0.16, 1, 0.3, 1);
+            --transition-slow: 0.6s var(--ease-lux);
+            --transition-fast: 0.3s var(--ease-lux);
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: var(--font-body);
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            line-height: 1.7;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        h1, h2, h3, h4 {
+            font-family: var(--font-sans);
+            color: white;
+            line-height: 1.1;
+            letter-spacing: -0.02em;
+        }
+
+        p {
+            color: var(--text-muted);
+            font-weight: 300;
+        }
+
+        /* ======================= SCROLL LOGO ANIMATION ======================= */
+        /* This is the floating seal that rotates on scroll */
+        .scroll-seal-container {
+            position: fixed;
+            bottom: 40px;
+            right: 40px;
+            width: 100px;
+            height: 100px;
+            z-index: 999;
+            pointer-events: none; /* Let clicks pass through */
+            mix-blend-mode: difference;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .scroll-text-ring {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            animation: spin-slow 20s linear infinite;
+        }
+
+        .scroll-text-ring text {
+            font-family: var(--font-sans);
+            font-size: 10px;
+            fill: var(--gold-primary);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-weight: 700;
+        }
+
+        .scroll-logo-center {
+            width: 40px;
+            height: 40px;
+            background-image: url("https://i.postimg.cc/tRv1d680/Untitled-design-(1).png"); /* Original Logo */
+            background-size: cover;
+            background-position: center;
+            border-radius: 50%;
+            /* The rotation of this element is controlled by JS */
+            transition: transform 0.1s linear; 
+            box-shadow: 0 0 20px rgba(212, 175, 55, 0.3);
+        }
+
+        @keyframes spin-slow {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        /* ======================= HEADER ======================= */
+        header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 100;
+            padding: 1.5rem 0;
+            transition: all 0.4s var(--ease-lux);
+            border-bottom: 1px solid transparent;
+        }
+
+        header.scrolled {
+            background: var(--glass-bg);
+            backdrop-filter: blur(var(--blur-val));
+            padding: 1rem 0;
+            border-bottom: 1px solid var(--border-subtle);
+        }
+
+        .header-inner {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo-lockup {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            text-decoration: none;
+        }
+
+        .logo-img {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            border: 2px solid var(--gold-primary);
+        }
+
+        .logo-text span {
+            display: block;
+        }
+        
+        .logo-brand {
+            font-family: var(--font-sans);
+            font-weight: 800;
+            color: white;
+            font-size: 1.5rem;
+            line-height: 1;
+        }
+
+        .logo-tag {
+            font-size: 0.75rem;
+            color: var(--gold-primary);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+
+        nav ul {
+            display: flex;
+            gap: 2.5rem;
+            list-style: none;
+        }
+
+        nav a {
+            color: var(--text-main);
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+            position: relative;
+            transition: color 0.3s ease;
+        }
+
+        nav a:hover {
+            color: var(--gold-primary);
+        }
+
+        /* Minimal gold underline on hover */
+        nav a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 1px;
+            bottom: -4px;
+            left: 0;
+            background-color: var(--gold-primary);
+            transition: width 0.3s ease;
+        }
+
+        nav a:hover::after {
+            width: 100%;
+        }
+
+        .btn-gold {
+            background: var(--gold-gradient);
+            color: #000;
+            padding: 0.75rem 1.75rem;
+            border-radius: 4px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 0.9rem;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .btn-gold:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(212, 175, 55, 0.2);
+        }
+
+        @media(max-width: 900px) {
+            nav, .header-cta { display: none; }
+        }
+
+        /* ======================= HERO ======================= */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            position: relative;
+            padding-top: 80px; /* offset header */
+            overflow: hidden;
+        }
+
+        /* Abstract Gold Background Elements */
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -20%;
+            right: -10%;
+            width: 800px;
+            height: 800px;
+            background: radial-gradient(circle, rgba(212, 175, 55, 0.15) 0%, transparent 70%);
+            filter: blur(60px);
+            z-index: 0;
+            animation: pulse-glow 8s infinite alternate;
+        }
+
+        @keyframes pulse-glow {
+            0% { opacity: 0.5; transform: scale(1); }
+            100% { opacity: 0.8; transform: scale(1.1); }
+        }
+
+        .hero-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            width: 100%;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+            z-index: 1;
+        }
+
+        .hero-text h1 {
+            font-size: clamp(3rem, 5vw, 4.5rem);
+            margin-bottom: 1.5rem;
+            background: linear-gradient(to right, #fff, #a3a3a3);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero-text p {
+            font-size: 1.25rem;
+            margin-bottom: 2.5rem;
+            max-width: 500px;
+        }
+
+        .hero-btns {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .btn-outline {
+            border: 1px solid var(--border-subtle);
+            color: white;
+            padding: 0.75rem 1.75rem;
+            border-radius: 4px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .btn-outline:hover {
+            border-color: var(--gold-primary);
+            color: var(--gold-primary);
+        }
+
+        /* Modern Image container with mask */
+        .hero-img-wrapper {
+            position: relative;
+        }
+
+        .hero-main-image {
+            width: 100%;
+            border-radius: 12px;
+            /* Grayscale to color on load or hover for mood */
+            filter: grayscale(20%) contrast(1.1);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+            transition: var(--transition-slow);
+        }
+
+        .hero-img-wrapper::after {
+            content: '';
+            position: absolute;
+            inset: -15px;
+            border: 1px solid var(--gold-dim);
+            border-radius: 12px;
+            z-index: -1;
+            transform: translate(10px, 10px);
+        }
+
+        /* ======================= DIRECTOR ======================= */
+        .director {
+            padding: 8rem 0;
+            background: linear-gradient(to bottom, var(--bg-dark), var(--bg-card));
+        }
+
+        .director-grid {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: grid;
+            grid-template-columns: 0.8fr 1.2fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .director-img-container {
+            position: relative;
+        }
+
+        .director-img-container img {
+            width: 100%;
+            border-radius: 2px;
+            filter: sepia(20%); /* slight vintage gold tone */
+        }
+
+        .director-content h2 {
+            font-family: var(--font-serif);
+            font-style: italic;
+            color: var(--gold-primary);
+            margin-bottom: 1rem;
+            font-size: 2.5rem;
+        }
+
+        .quote-block {
+            border-left: 2px solid var(--gold-primary);
+            padding-left: 2rem;
+            margin-top: 2rem;
+        }
+
+        .quote-block p {
+            font-size: 1.1rem;
+            color: var(--text-main);
+        }
+
+        /* ======================= FEATURES GRID ======================= */
+        .features {
+            padding: 8rem 0;
+            background: var(--bg-dark);
+            position: relative;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .section-title h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .section-title span {
+            color: var(--gold-primary);
+            text-transform: uppercase;
+            font-size: 0.8rem;
+            letter-spacing: 3px;
+        }
+
+        .features-grid {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .feature-card {
+            background: var(--bg-card);
+            padding: 3rem 2rem;
+            border: 1px solid var(--border-subtle);
+            border-radius: 8px;
+            transition: var(--transition-fast);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--gold-dim);
+        }
+
+        /* Gold gradient line on top of card */
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: var(--gold-primary);
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.4s ease;
+        }
+
+        .feature-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .feature-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(135deg, #fff, #999);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .feature-card h3 {
+            margin-bottom: 1rem;
+            font-size: 1.25rem;
+        }
+
+        /* ======================= VALUES (Dark cards) ======================= */
+        .values-section {
+            padding: 6rem 2rem;
+            background: var(--bg-surface);
+        }
+
+        .values-wrapper {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .values-list {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1px; /* Gap creates the border effect */
+            background: rgba(255, 255, 255, 0.1); /* Border color */
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .value-item {
+            background: var(--bg-surface);
+            padding: 3rem 2rem;
+            transition: background 0.3s;
+        }
+
+        .value-item:hover {
+            background: #232323;
+        }
+
+        .value-item h4 {
+            color: var(--gold-primary);
+            font-size: 1.1rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        @media (max-width: 900px) {
+            .values-list { grid-template-columns: 1fr; }
+            .hero-container, .director-grid { grid-template-columns: 1fr; }
+            .hero-text { order: 2; }
+            .hero-img-wrapper { order: 1; margin-bottom: 2rem; }
+            .scroll-seal-container { display: none; } /* Hide complicated anim on mobile */
+        }
+
+        /* ======================= FOOTER ======================= */
+        footer {
+            background: black;
+            padding: 5rem 2rem 2rem;
+            border-top: 1px solid var(--border-subtle);
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 4rem;
+            margin-bottom: 4rem;
+        }
+
+        .footer-brand h2 {
+            font-size: 2rem;
+            color: white;
+            margin-bottom: 0.5rem;
+        }
+        
+        .footer-brand p {
+            font-size: 0.9rem;
+            max-width: 300px;
+        }
+
+        .footer-links {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+        }
+
+        .footer-col h4 {
+            font-size: 0.85rem;
+            color: var(--gold-primary);
+            margin-bottom: 1.5rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .footer-col ul {
+            list-style: none;
+        }
+
+        .footer-col li {
+            margin-bottom: 0.8rem;
+        }
+
+        .footer-col a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: color 0.3s;
+        }
+
+        .footer-col a:hover {
+            color: white;
+        }
+
+        .footer-bottom {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding-top: 2rem;
+            border-top: 1px solid var(--border-subtle);
+            text-align: center;
+            font-size: 0.8rem;
+            color: #555;
+        }
+
+        /* ======================= ANIMATION UTILS ======================= */
+        .reveal-on-scroll {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s var(--ease-lux);
+        }
+
+        .reveal-on-scroll.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body>
+
+    <!-- SCROLL ANIMATION FEATURE -->
+    <!-- This element stays fixed in the corner. The JS rotates the center image based on scroll position -->
+    <div class="scroll-seal-container">
+        <!-- SVG Text Ring -->
+        <div class="scroll-text-ring">
+            <svg viewBox="0 0 100 100" width="100" height="100">
+                <defs>
+                    <path id="circle" d="M 50, 50 m -37, 0 a 37,37 0 1,1 74,0 a 37,37 0 1,1 -74,0"/>
+                </defs>
+                <text font-size="10">
+                    <textPath xlink:href="#circle">
+                        • Immersion • Education • Partners • 
+                    </textPath>
+                </text>
+            </svg>
+        </div>
+        <!-- Center Logo that will rotate based on scroll -->
+        <div class="scroll-logo-center" id="rotatingLogo"></div>
+    </div>
+
+    <header id="mainHeader">
+        <div class="header-inner">
+            <a href="#" class="logo-lockup">
+                <img src="https://i.postimg.cc/tRv1d680/Untitled-design-(1).png" alt="IEP Logo" class="logo-img">
+                <div class="logo-text">
+                    <span class="logo-brand">IEP</span>
+                    <span class="logo-tag">Immersion Partners</span>
+                </div>
+            </a>
+            <nav>
+                <ul>
+                    <li><a href="#features">Features</a></li>
+                    <li><a href="#director">Director</a></li>
+                    <li><a href="#values">Values</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+            </nav>
+            <div class="header-cta">
+                <a href="#contact" class="btn-gold">Get Started</a>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <section class="hero">
+            <div class="hero-container">
+                <div class="hero-text reveal-on-scroll">
+                    <h1>Elevating Immersion Education</h1>
+                    <p>We empower educators and districts to build world-class multilingual communities where every learner thrives.</p>
+                    <div class="hero-btns">
+                        <a href="#features" class="btn-gold">Explore Solutions</a>
+                        <a href="#contact" class="btn-outline">Contact Us</a>
+                    </div>
+                </div>
+                <div class="hero-img-wrapper reveal-on-scroll">
+                    <!-- New Modern Image -->
+                    <img src="https://i.postimg.cc/wxSjJ4yG/Gemini-Generated-Image-te7jk4te7jk4te7j.png" alt="Students learning" class="hero-main-image">
+                </div>
+            </div>
+        </section>
+
+        <section class="director" id="director">
+            <div class="director-grid">
+                <div class="director-img-container reveal-on-scroll">
+                    <img src="https://i.postimg.cc/y6bX4KJv/Bildschirmfoto-2026-01-16-um-6-01-41-PM.png" alt="Executive Director">
+                </div>
+                <div class="director-content reveal-on-scroll">
+                    <h2>"Language is the architecture of opportunity."</h2>
+                    <div class="quote-block">
+                        <p>Our mission is rooted in a deep commitment to educational equity. We believe that multilingual education isn't just about language—it's about identity, opportunity, and empowerment.</p>
+                        <br>
+                        <p style="color: white; font-weight: 500;">— Executive Director</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="features" id="features">
+            <div class="section-title reveal-on-scroll">
+                <span>Our Expertise</span>
+                <h2>Strategic Support for Schools</h2>
+            </div>
+            <div class="features-grid">
+                <div class="feature-card reveal-on-scroll">
+                    <div class="feature-icon">✦</div>
+                    <h3>Comprehensive Training</h3>
+                    <p>Professional development programs designed for teachers, administrators, and program leaders at all levels of experience.</p>
+                </div>
+                <div class="feature-card reveal-on-scroll">
+                    <div class="feature-icon">❖</div>
+                    <h3>Strategic Guidance</h3>
+                    <p>Expert consultation to help you launch, improve, or scale immersion and dual language programs with integrity.</p>
+                </div>
+                <div class="feature-card reveal-on-scroll">
+                    <div class="feature-icon">⚡</div>
+                    <h3>Community Support</h3>
+                    <p>Connect with a national network of educators dedicated to multilingual excellence and culturally responsive practice.</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="values-section" id="values">
+            <div class="values-wrapper">
+                <div class="section-title reveal-on-scroll">
+                    <span>Our Core</span>
+                    <h2>Values & Principles</h2>
+                </div>
+                <div class="values-list reveal-on-scroll">
+                    <div class="value-item">
+                        <h4>Academic Excellence</h4>
+                        <p>High-quality instruction grounded in research and designed to support achievement.</p>
+                    </div>
+                    <div class="value-item">
+                        <h4>Equity & Inclusion</h4>
+                        <p>Ensuring every student and community has the resources they need to thrive.</p>
+                    </div>
+                    <div class="value-item">
+                        <h4>Linguistic Celebration</h4>
+                        <p>Languages and cultures are strengths. We celebrate multilingualism.</p>
+                    </div>
+                    <div class="value-item">
+                        <h4>Community Centered</h4>
+                        <p>We honor the voices, stories, and strengths of the communities we serve.</p>
+                    </div>
+                    <div class="value-item">
+                        <h4>Relationship Building</h4>
+                        <p>Our greatest strength is connection. We build bridges across cultures.</p>
+                    </div>
+                    <div class="value-item">
+                        <h4>Global Competency</h4>
+                        <p>Preparing changemakers to lead in an interconnected world.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-brand">
+                <h2>IEP</h2>
+                <p>Transforming education through the power of immersion and dual language strategies.</p>
+            </div>
+            <div class="footer-links">
+                <div class="footer-col">
+                    <h4>Company</h4>
+                    <ul>
+                        <li><a href="#">About</a></li>
+                        <li><a href="#">Team</a></li>
+                        <li><a href="#">Careers</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Resources</h4>
+                    <ul>
+                        <li><a href="#">Research</a></li>
+                        <li><a href="#">Events</a></li>
+                        <li><a href="#">Blog</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Connect</h4>
+                    <ul>
+                        <li><a href="#">LinkedIn</a></li>
+                        <li><a href="#">Twitter</a></li>
+                        <li><a href="#">Instagram</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            &copy; 2025 Immersion Education Partners. All Rights Reserved.
+        </div>
+    </footer>
+
+    <script>
+        // 1. Scroll Logo Animation
+        // We select the logo center element
+        const rotatingLogo = document.getElementById('rotatingLogo');
+        
+        window.addEventListener('scroll', () => {
+            // Get scroll position
+            const scrollPosition = window.scrollY;
+            
+            // Calculate rotation: 1 degree per 5 pixels scrolled
+            const rotation = scrollPosition / 5;
+            
+            // Apply rotation to the logo center
+            if(rotatingLogo) {
+                rotatingLogo.style.transform = `rotate(${rotation}deg)`;
+            }
+        });
+
+        // 2. Header Glass Effect
+        const header = document.getElementById('mainHeader');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+
+        // 3. Reveal on Scroll (Intersection Observer)
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: "0px 0px -50px 0px"
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.reveal-on-scroll').forEach(el => {
+            observer.observe(el);
+        });
+    </script>
+</body>
+</html>
